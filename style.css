@@ -1,0 +1,334 @@
+/* --- Thiết lập chung --- */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #e0e0e0; /* Nền xám nhạt để làm nổi poster */
+    margin: 0;
+    padding: 1rem; /* Thêm chút đệm cho màn hình nhỏ */
+    font-family: 'Quicksand', sans-serif;
+    box-sizing: border-box;
+}
+
+/* --- Khung Poster chính (ĐÃ CẬP NHẬT) --- */
+.poster {
+    position: relative; /* Quan trọng để định vị các phần tử con */
+    
+    /* Thay vì width và height cố định, ta dùng max-width và aspect-ratio */
+    width: 95%; /* Chiếm 95% chiều rộng của phần tử cha (body) */
+    max-width: 600px; /* Nhưng không bao giờ rộng quá 600px */
+    aspect-ratio: 600 / 840; /* Giữ nguyên tỷ lệ chiều rộng / chiều cao (như tờ giấy A4) */
+
+    background: linear-gradient(to bottom right, #0d47a1, #1976d2); /* Nền xanh dương chuyển sắc */
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    overflow: hidden; /* Ẩn các phần tử trang trí bị tràn ra ngoài */
+    /* Thêm họa tiết hoa văn mờ */
+    background-image: 
+        linear-gradient(to bottom right, #0d47a1, #1976d2), 
+        url('https://www.transparenttextures.com/patterns/flowers.png');
+    background-blend-mode: multiply;
+}
+
+/* --- Tiêu đề (ĐÃ CẬP NHẬT) --- */
+.title {
+    position: absolute;
+    /* Dùng % để vị trí linh hoạt theo kích thước poster */
+    top: 7%;
+    right: 8%;
+    color: white;
+    text-align: right;
+}
+
+.title h1 {
+    font-family: 'Playfair Display', serif;
+    /* Dùng clamp() để font tự co giãn nhưng có giới hạn min/max */
+    font-size: clamp(1.5rem, 6vw, 2.8rem);
+    margin: 0;
+    line-height: 1.1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* --- Khung ảnh (ĐÃ CẬP NHẬT) --- */
+.photo-frame {
+    position: absolute;
+    background-color: white;
+    padding: 1.2%; /* Dùng % cho padding */
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- Vị trí các khung ảnh (ĐÃ CẬP NHẬT sang %) --- */
+.main-photo {
+    width: 41.6%; /* 250px / 600px */
+    height: 29.7%; /* 250px / 840px */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Căn giữa hoàn hảo */
+    border: 3px solid #bbdefb;
+}
+
+/* Placeholder cho ảnh chính */
+.placeholder-text {
+    color: #999;
+    font-size: clamp(0.8rem, 3vw, 1.2rem);
+}
+
+.small-photo {
+    width: 23.3%; /* 140px / 600px */
+    height: 11.9%; /* 100px / 840px */
+}
+
+.photo-1 { top: 21.4%; left: 6.7%; transform: rotate(-8deg); }
+.photo-2 { top: 39.3%; left: 3.3%; transform: rotate(5deg); }
+.photo-3 { top: 57.1%; left: 10%; transform: rotate(-5deg); }
+.photo-4 { top: 26.2%; right: 5%; transform: rotate(10deg); }
+.photo-5 { top: 54.7%; right: 6.7%; transform: rotate(6deg); }
+
+
+/* --- Bảng tên (ĐÃ CẬP NHẬT) --- */
+.name-plate {
+    position: absolute;
+    bottom: 6%;
+    right: 6.7%;
+    background-color: white;
+    padding: 2% 4%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.name-plate h2 {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    color: #0d47a1;
+    font-size: clamp(1rem, 4.5vw, 1.8rem);
+}
+
+/* --- Họa tiết trang trí (ĐÃ CẬP NHẬT) --- */
+.poster [class^="deco-"] {
+    position: absolute;
+    width: 13.3%; /* 80px / 600px */
+    opacity: 0.9;
+}
+.deco-cap-1 { top: 9%; left: 12%;width: 18%; }
+.deco-diploma-1 { top: 19%; right: 10%; }
+.deco-diploma-2 { bottom: 18%; left: 6.7%; }
+.deco-cap-2 { bottom: 3.5%; left: 45%; transform: translateX(-50%); width: 16.6%; }
+/* --- Hiệu ứng pháo giấy --- */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: gold;
+    top: -10px;
+    opacity: 0.8;
+    animation: fall 4s linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Nhiều màu sắc cho pháo giấy */
+.confetti:nth-child(odd) { background-color: #ff6b6b; }
+.confetti:nth-child(even) { background-color: #4caf50; }
+
+/* --- Hiệu ứng viền ảnh --- */
+.photo-frame {
+    transition: box-shadow 0.5s ease;
+}
+.photo-frame:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+}
+
+/* --- Hiệu ứng chữ tiêu đề --- */
+.title h1 {
+    animation: fadeIn 2s ease-in-out forwards;
+}
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.5); }
+    100% { opacity: 1; transform: scale(1); }
+}
+/* --- Confetti --- */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: gold;
+    top: -10px;
+    opacity: 0.9;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+.confetti:nth-child(odd) { background-color: #ff6b6b; }
+.confetti:nth-child(even) { background-color: #4caf50; }
+
+/* --- Bóng bay --- */
+.balloon {
+    position: absolute;
+    bottom: -150px;
+    width: 40px;
+    height: 60px;
+    background: radial-gradient(circle at 30% 30%, #ff4081, #c2185b);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: floatBalloon 10s linear infinite;
+}
+@keyframes floatBalloon {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-120vh) rotate(10deg); }
+}
+
+/* --- Dây bóng bay --- */
+.balloon::after {
+    content: "";
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    width: 2px;
+    height: 40px;
+    background: #444;
+}
+
+/* --- Ngôi sao lấp lánh --- */
+.star {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle {
+    0% { opacity: 0.3; transform: scale(0.5); }
+    100% { opacity: 1; transform: scale(1.2); }
+}
+
+/* --- Hiệu ứng hover ảnh nhỏ --- */
+.small-photo {
+    transition: transform 0.4s ease;
+}
+.small-photo:hover {
+    transform: scale(1.1) rotate(0deg);
+}
+
+/* --- Hiệu ứng tiêu đề --- */
+.title h1 {
+    animation: fadeIn 2s ease-in-out forwards;
+}
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-20px) scale(0.8); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* Nút bật/tắt nhạc */
+#music-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+    z-index: 20;
+}
+#music-btn:hover {
+    transform: scale(1.1);
+}
+/* --- Responsive cho màn hình nhỏ (điện thoại) --- */
+@media (max-width: 768px) {
+    body {
+        padding: 0.5rem;
+    }
+
+    .poster {
+        width: 100%;
+        max-width: 95%;
+        aspect-ratio: auto; /* Cho phép poster cao hơn */
+        padding: 10px;
+    }
+
+    /* Tiêu đề */
+    .title {
+        top: 5%;
+        right: 0;
+        left: 0;
+        text-align: center;
+    }
+
+    .title h1 {
+        font-size: clamp(1.2rem, 5vw, 2rem);
+    }
+
+    /* Ảnh chính */
+    .main-photo {
+        width: 70%;
+        height: auto;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* Ảnh nhỏ */
+    .small-photo {
+        width: 35%;
+        height: auto;
+    }
+
+    .photo-1 { top: 15%; left: 5%; transform: rotate(-4deg); }
+    .photo-2 { top: 30%; left: 2%; transform: rotate(2deg); }
+    .photo-3 { top: 65%; left: 8%; transform: rotate(-2deg); }
+    .photo-4 { top: 25%; right: 5%; transform: rotate(3deg); }
+    .photo-5 { top: 65%; right: 5%; transform: rotate(-3deg); }
+
+    /* Bảng tên */
+    .name-plate {
+        bottom: 4%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        padding: 6px 12px;
+    }
+
+    .name-plate h2 {
+        font-size: clamp(0.9rem, 4vw, 1.3rem);
+    }
+
+    /* Nút nhạc */
+    #music-btn {
+        bottom: 10px;
+        top: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+/* --- Responsive cho tablet/màn hình trung bình --- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .main-photo {
+        width: 50%;
+    }
+
+    .small-photo {
+        width: 25%;
+    }
+}
