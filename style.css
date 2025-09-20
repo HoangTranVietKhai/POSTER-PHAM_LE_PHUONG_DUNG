@@ -322,13 +322,3 @@ body {
     }
 }
 
-/* --- Responsive cho tablet/màn hình trung bình --- */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .main-photo {
-        width: 50%;
-    }
-
-    .small-photo {
-        width: 25%;
-    }
-}
